@@ -12,6 +12,7 @@ export default function Catagory({ data }) {
                     <li>{item.Catagoryname}</li>
                 ))}
             </ul>
+            <div className="h-screen w-screen bg-slate-400"></div>
         </>
     )
 }

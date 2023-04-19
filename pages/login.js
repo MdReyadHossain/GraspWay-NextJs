@@ -1,9 +1,13 @@
 import LayoutHome from "@/components/_layoutHome";
 import { headers } from "@/next.config";
+import Header from "@/components/_header";
 import axios from "axios";
 import { useState } from "react";
 import { useForm } from 'react-hook-form';
 import { useNavigate, Redirect } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Login() {
     const {
@@ -13,6 +17,7 @@ export default function Login() {
         reset,
     } = useForm();
     const [success, setSuccess] = useState('');
+    const router = useRouter();
     const onSubmit = async (data) => {
         try {
             const res = await axios.post("http://localhost:3000/login",
@@ -26,16 +31,16 @@ export default function Login() {
                 console.log(res.data.user);
                 switch (res.data.user) {
                     case "admin":
-                        window.location.replace('/admin/dashboard');
+                        router.push('/admin/dashboard');
                         break;
                     case "manager":
-                        window.location.replace('/manager/dashboard');
+                        router.push("/manager/dashboard");
                         break;
                     case "instructor":
-                        window.location.replace('/instructor/dashboard');
+                        router.push("/instructor/dashboard");
                         break;
                     case "student":
-                        window.location.replace('/student/dashboard');
+                        router.push("/student/dashboard");
                         break;
                     default:
                         setSuccess(res.data.message);
@@ -54,23 +59,58 @@ export default function Login() {
 
     return (
         <>
-            <LayoutHome title="Login" />
-            <div className="text-center">{success}</div>
-            <div className="w-screen flex justify-center">
-                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th><label htmlFor="user">Username</label></th>
-                                <td> : <input className="border-2 border-black rounded-sm" type="text" id="username" placeholder="username" {...register('username', { required: true })} />{errors.username && <p>Username is required</p>}</td>
-                            </tr>
-                            <tr>
-                                <th><label htmlFor="pass">Password</label></th>
-                                <td> : <input className="border-2 border-black rounded-sm" type="password" id="password" placeholder="password" {...register('password', { required: true })} />{errors.password && <p>Password is required</p>}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <input className=" bg-lime-500 px-2 py-1 hover:ring-2 ring-slate-800" type="submit" value={"Login"} />
+            <Header title="Login" />
+            <div className="flex justify-center items-center h-screen">
+                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white p-8 rounded shadow-md">
+                    <a href="/" class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+                        <Image src="/graspway-ico.svg" alt="graspway" width={30} height={0} />
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                        <span class="ml-3 text-xl">Graspway</span>
+                    </a>
+
+                    {success == 'Login Successfull!' ?
+                        <div className="alert alert-success rounded p-2 m-1 text-white"><svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{success}</span></div> : success != '' ?
+                            <div className="alert alert-error rounded p-2 m-1 text-white"><svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{success}</span></div> :
+                            ''}
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
+                            Username
+                        </label>
+                        <input
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="text"
+                            id="username"
+                            placeholder="username"
+                            {...register('username', { required: true })}
+                        />
+                        {errors.username && <p className="text-red-500">Username is required</p>}
+                    </div>
+                    <div className="mb-6">
+                        <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
+                            Password
+                        </label>
+                        <input
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            type="password"
+                            id="password"
+                            placeholder="password"
+                            {...register('password', { required: true })}
+                        />
+                        {errors.password && <p className="text-red-500">Password is required</p>}
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit"
+                            value={"Login"}
+                        >
+                            Login
+                        </button>
+                        <Link className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/register">
+                            Create an Account
+                        </Link>
+                    </div>
                 </form>
             </div>
         </>
