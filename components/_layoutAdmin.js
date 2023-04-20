@@ -1,9 +1,12 @@
 import Header from "./_header";
 import Link from "next/link";
+import Image from "next/image";
 import Head from "next/head";
 import { Children } from "react";
 import { useRouter } from "next/router";
 import SwitchTheme from "./_switchTheme";
+import { AiFillDashboard, AiOutlineUser } from "react-icons/ai";
+import FooterAdmin from "./_footerAdmin";
 
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
@@ -14,7 +17,7 @@ export default function LayoutAdmin({ children }) {
             <div className="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle " />
                 <div className="drawer-content">
-                    <div className="sticky top-0 navbar z-10">
+                    <div className="lg:sticky lg:top-0 navbar z-10">
                         <div className="flex-1">
                             <label htmlFor="my-drawer-2" className="btn btn-circle swap swap-rotate drawer-button lg:hidden bg-white border-none">
                                 <input type="checkbox" />
@@ -24,15 +27,15 @@ export default function LayoutAdmin({ children }) {
                         </div>
                         <div className="flex-none gap-2">
                             <div className="form-control">
-                                <input type="text" placeholder="Search" className="input w-32 lg:w-60" />
+                                <input type="text" placeholder="Search" className="bg-slate-50 input w-32 lg:w-60" />
                             </div>
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
-                                        <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        <img src={"http://localhost:3000/admin/getimage/" + sessionStorage.getItem('image')} alt="admin" />
                                     </div>
                                 </label>
-                                <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
+                                <ul tabIndex={0} className="mt-3 p-2 drop-shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                     <li>
                                         <a className="justify-between">
                                             Profile
@@ -45,10 +48,11 @@ export default function LayoutAdmin({ children }) {
                         </div>
                         <div className="flex-none gap-2"><SwitchTheme /></div>
                     </div>
-                    <div className="p-4">
+                    <div className={""}>
                         {children}
                     </div>
                     <div className="h-screen"></div>
+                    <FooterAdmin />
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
@@ -59,12 +63,12 @@ export default function LayoutAdmin({ children }) {
                         <li className={router.pathname.indexOf("/admin/dashboard") !== -1
                             ? "bg-indigo-700 hover:bg-slate-800"
                             : "hover:bg-slate-800"}>
-                            <Link href={"/admin/dashboard"}>Dashboard</Link>
+                            <Link href={"/admin/dashboard"}><AiFillDashboard className="" />Dashboard</Link>
                         </li>
                         <li className={router.pathname.indexOf("/admin/user") !== -1
                             ? "bg-indigo-700 hover:bg-slate-800"
                             : "hover:bg-slate-800"}>
-                            <Link href={"/admin/user"}>Users</Link>
+                            <Link href={"/admin/user"}><AiOutlineUser className="" />Users</Link>
                         </li>
                     </ul>
                 </div>

@@ -26,11 +26,18 @@ export default function Login() {
                     "Content-Type": "application/json"
                 }
             });
-            console.log(res.data.success);
+            console.log(res.data.session.image);
             if (res.data.success) {
                 console.log(res.data.user);
                 switch (res.data.user) {
                     case "admin":
+                        sessionStorage.setItem('Id', res.data.session.Id);
+                        sessionStorage.setItem('admin_name', res.data.session.admin_name);
+                        sessionStorage.setItem('address', res.data.session.address);
+                        sessionStorage.setItem('email', res.data.session.email);
+                        sessionStorage.setItem('joiningYear', res.data.session.joiningYear);
+                        sessionStorage.setItem('phoneNo', res.data.session.phoneNo);
+                        sessionStorage.setItem('image', res.data.session.image);
                         router.push('/admin/dashboard');
                         break;
                     case "manager":

@@ -1,9 +1,9 @@
 import { useLocalStorage } from 'use-hooks';
 import { useEffect } from 'react';
-import { FiMoon, FiSun } from 'react-icons/fi';
+import { FaMoon, FaSun } from 'react-icons/fa';
 
 export default function SwitchTheme() {
-    const [theme, setTheme] = useLocalStorage('theme', 'dark');
+    const [theme, setTheme] = useLocalStorage('theme');
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };
@@ -15,11 +15,11 @@ export default function SwitchTheme() {
     }, [theme]);
 
     return (
-        <button className="btn btn-circle flex items-center justify-center ml-2" onClick={toggleTheme}>
+        <button className="flex items-center justify-center ml-5 text-gray-500" onClick={toggleTheme}>
             {theme === 'dark' ? (
-                <FiMoon className="w-5 h-5" />
+                <FaMoon className="w-7 h-7" />
             ) : (
-                <FiSun className="w-5 h-5" />
+                <FaSun className="w-7 h-7" />
             )}
         </button>
     );
