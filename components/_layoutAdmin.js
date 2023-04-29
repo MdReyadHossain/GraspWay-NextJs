@@ -2,14 +2,20 @@ import Header from "./_header";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
-import { Children } from "react";
+import { Children, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from 'react';
 import SwitchTheme from "./_switchTheme";
 import { AiFillDashboard, AiOutlineUser } from "react-icons/ai";
 import FooterAdmin from "./_footerAdmin";
 
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
+    const [image, setImage] = useState('');
+    useEffect(() => {
+        setImage(sessionStorage.getItem('image'));
+    });
+
     return (
         <>
             <Header title="Admin Panel" />
@@ -32,7 +38,7 @@ export default function LayoutAdmin({ children }) {
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
-                                        <img src={"http://localhost:3000/admin/getimage/" + sessionStorage.getItem('image')} alt="admin" />
+                                        <img src={"http://localhost:3000/admin/getimage/" + image} alt="admin" />
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className="mt-3 p-2 drop-shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
@@ -42,7 +48,7 @@ export default function LayoutAdmin({ children }) {
                                         </a>
                                     </li>
                                     <li><a>Settings</a></li>
-                                    <li><a href="/">Logout</a></li>
+                                    <li><a href="/logout">Logout</a></li>
                                 </ul>
                             </div>
                         </div>

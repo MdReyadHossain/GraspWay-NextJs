@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 export default function SwitchTheme() {
-    const [theme, setTheme] = useLocalStorage('theme');
+    const [theme, setTheme] = useLocalStorage('theme', 'light');
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };

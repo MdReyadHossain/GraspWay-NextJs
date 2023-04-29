@@ -65,8 +65,6 @@ export default function Dashboard({ data }) {
                     </div>
                 </div>
             </LayoutAdmin>
-
-
         </>
     )
 }

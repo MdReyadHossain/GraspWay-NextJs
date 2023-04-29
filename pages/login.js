@@ -8,6 +8,7 @@ import { useNavigate, Redirect } from "react-router-dom";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import SwitchTheme from "@/components/_switchTheme";
 
 export default function Login() {
     const {
@@ -24,7 +25,8 @@ export default function Login() {
                 data, {
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
+                // withCredentials: true
             });
             console.log(res.data.session.image);
             if (res.data.success) {
@@ -66,6 +68,7 @@ export default function Login() {
 
     return (
         <>
+            <div ><SwitchTheme /></div>
             <Header title="Login" />
             <div className="flex justify-center items-center h-screen">
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white p-8 rounded shadow-md">

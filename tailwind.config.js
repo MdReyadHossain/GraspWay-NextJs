@@ -13,6 +13,9 @@ module.exports = {
             roman: 'upper-roman',
         },
         extend: {},
+        dark: {
+            textColor: 'white',
+        },
     },
     plugins: [require("daisyui")],
     daisyui: {
