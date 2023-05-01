@@ -12,17 +12,20 @@ import FooterAdmin from "./_footerAdmin";
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
     const [image, setImage] = useState('');
+    const [name, setName] = useState('');
+
     useEffect(() => {
         setImage(sessionStorage.getItem('image'));
+        setName(sessionStorage.getItem('admin_name'));
     });
 
     return (
         <>
             <Header title="Admin Panel" />
 
-            <div className="drawer drawer-mobile">
+            <div className="drawer drawer-mobile bg-slate-100">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle " />
-                <div className="drawer-content">
+                <div className="drawer-content min-h-screen">
                     <div className="lg:sticky lg:top-0 navbar z-10">
                         <div className="flex-1">
                             <label htmlFor="my-drawer-2" className="btn btn-circle swap swap-rotate drawer-button lg:hidden bg-white border-none">
@@ -32,9 +35,9 @@ export default function LayoutAdmin({ children }) {
                             </label>
                         </div>
                         <div className="flex-none gap-2">
-                            <div className="form-control">
+                            <form className="form-control">
                                 <input type="text" placeholder="Search" className="bg-slate-50 input w-32 lg:w-60" />
-                            </div>
+                            </form>
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
@@ -43,11 +46,10 @@ export default function LayoutAdmin({ children }) {
                                 </label>
                                 <ul tabIndex={0} className="mt-3 p-2 drop-shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                                     <li>
-                                        <a className="justify-between">
-                                            Profile
-                                        </a>
+                                        <Link href="/admin/settings" className="justify-between">
+                                            Settings
+                                        </Link>
                                     </li>
-                                    <li><a>Settings</a></li>
                                     <li><a href="/logout">Logout</a></li>
                                 </ul>
                             </div>
@@ -55,14 +57,21 @@ export default function LayoutAdmin({ children }) {
                         <div className="flex-none gap-2"><SwitchTheme /></div>
                     </div>
                     <div className={""}>
-                        {children}
+                        <div className="bg-blue-950 md:pt-10 pb-32 pt-12 h-96">
+                            {children}
+                            {/* <div className="h-screen"></div> */}
+                            <div className="w-full m-auto">
+                                <FooterAdmin />
+                            </div>
+                        </div>
                     </div>
-                    <div className="h-screen"></div>
-                    <FooterAdmin />
+
                 </div>
+
+                {/* {Admin Sidebar} */}
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-                    <ul className="menu w-60 bg-slate-950 text-slate-200">
+                    <ul className="menu w-60 bg-slate-700 text-slate-200">
                         <li className="text-2xl text-white font-bold m-2">Admin Panal</li>
                         <br />
                         {/* <!-- Sidebar content here --> */}

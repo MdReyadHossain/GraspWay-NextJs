@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import SwitchTheme from "@/components/_switchTheme";
 
+
 export default function Login() {
     const {
         register,
@@ -35,6 +36,7 @@ export default function Login() {
                     case "admin":
                         sessionStorage.setItem('Id', res.data.session.Id);
                         sessionStorage.setItem('admin_name', res.data.session.admin_name);
+                        sessionStorage.setItem('password', res.data.session.password);
                         sessionStorage.setItem('address', res.data.session.address);
                         sessionStorage.setItem('email', res.data.session.email);
                         sessionStorage.setItem('joiningYear', res.data.session.joiningYear);
