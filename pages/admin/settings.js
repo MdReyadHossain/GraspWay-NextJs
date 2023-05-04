@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import CardSettings from "@/components/_settingsCard";
 import CardProfile from "@/components/_profileCard";
 
-export default function Profile() {
+export default function Settings() {
     return (
         <>
             <LayoutAdmin title="Dashboard">

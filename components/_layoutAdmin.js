@@ -6,7 +6,7 @@ import { Children, useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from 'react';
 import SwitchTheme from "./_switchTheme";
-import { AiFillDashboard, AiOutlineUser } from "react-icons/ai";
+import { AiFillDashboard, AiOutlineUser, AiOutlineSetting } from "react-icons/ai";
 import FooterAdmin from "./_footerAdmin";
 
 export default function LayoutAdmin({ children }) {
@@ -26,7 +26,7 @@ export default function LayoutAdmin({ children }) {
             <div className="drawer drawer-mobile bg-slate-100">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle " />
                 <div className="drawer-content min-h-screen">
-                    <div className="lg:sticky lg:top-0 navbar z-10">
+                    <div className="lg:sticky lg:top-0 navbar z-10 backdrop-blur-sm">
                         <div className="flex-1">
                             <label htmlFor="my-drawer-2" className="btn btn-circle swap swap-rotate drawer-button lg:hidden bg-white border-none">
                                 <input type="checkbox" />
@@ -41,7 +41,7 @@ export default function LayoutAdmin({ children }) {
                             <div className="dropdown dropdown-end">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
-                                        <img src={"http://localhost:3000/admin/getimage/" + image} alt="admin" />
+                                        <img title={name} src={"http://localhost:3000/admin/getimage/" + image} alt="admin" />
                                     </div>
                                 </label>
                                 <ul tabIndex={0} className="mt-3 p-2 drop-shadow-lg menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
@@ -54,7 +54,7 @@ export default function LayoutAdmin({ children }) {
                                 </ul>
                             </div>
                         </div>
-                        <div className="flex-none gap-2"><SwitchTheme /></div>
+                        <div className="flex-none gap-2" hidden><SwitchTheme /></div>
                     </div>
                     <div className={""}>
                         <div className="bg-blue-950 md:pt-10 pb-32 pt-12 h-96">
@@ -84,6 +84,11 @@ export default function LayoutAdmin({ children }) {
                             ? "bg-indigo-700 hover:bg-slate-800"
                             : "hover:bg-slate-800"}>
                             <Link href={"/admin/user"}><AiOutlineUser className="" />Users</Link>
+                        </li>
+                        <li className={router.pathname.indexOf("/admin/settings") !== -1
+                            ? "bg-indigo-700 hover:bg-slate-800"
+                            : "hover:bg-slate-800"}>
+                            <Link href={"/admin/settings"}><AiOutlineSetting className="" />Settings</Link>
                         </li>
                     </ul>
                 </div>

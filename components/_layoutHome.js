@@ -30,7 +30,7 @@ export default function LayoutHome(props) {
                         </div>
                         <Link href={"/login"}><button class="bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base md:mt-0">Login
                         </button></Link>
-                        <div className="flex-none gap-2"><SwitchTheme /></div>
+                        <div className="flex-none gap-2" hidden><SwitchTheme /></div>
                     </div>
                 </div>
             </header >

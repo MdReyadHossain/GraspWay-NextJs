@@ -5,81 +5,161 @@ import { useRouter } from 'next/router'
 
 
 export default function CardSettings() {
-    const router = useRouter();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm();
-    const validateFile = (value) => {
-        const file = value[0];
-        const allowedtypes = ["image/jpg", "image/png", "image/jpeg"];
-
-        if (!allowedtypes.includes(file.type)) {
-            return false;
-        }
-    }
-
-    const [success, setSuccess] = useState('')
-    const onSubmit = async (data) => {
-        console.log(data);
-        const formData = new FormData();
-        formData.append('admin_name', data.name);
-        formData.append('password', data.password);
-        formData.append('email', data.email);
-        formData.append('phoneNo', data.phoneNo);
-        formData.append('address', data.address);
-        formData.append('joiningYear', data.joiningYear);
-        formData.append('adminImage', data.image[0]);
-        console.log(formData);
-        try {
-            const res = await axios.post("localhost:3000/admin/editprofile/",
-                formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            });
-
-            console.log(res.data);
-            // sessionStorage.setItem('Id', res.data.session.Id);
-            // sessionStorage.setItem('admin_name', res.data.session.admin_name);
-            // sessionStorage.setItem('address', res.data.session.address);
-            // sessionStorage.setItem('email', res.data.session.email);
-            // sessionStorage.setItem('joiningYear', res.data.session.joiningYear);
-            // sessionStorage.setItem('phoneNo', res.data.session.phoneNo);
-            // sessionStorage.setItem('image', res.data.session.image);
-        }
-        catch (error) {
-            console.log(error.response.data.message);
-
-            setSuccess('Admin add unsuccessfull ' + error.response.data.message);
-        }
-    };
-
     const [id, setId] = useState();
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
     const [address, setAddress] = useState('');
     const [email, setEmail] = useState('');
     const [joinYr, setJoinYr] = useState('');
     const [phoneNo, setphoneNo] = useState('');
 
+    const [imageError, setImageError] = useState(true);
+    const [nameError, setNameError] = useState('');
+    const [addressError, setAddressError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [joinYrError, setJoinYrError] = useState('');
+    const [phoneNoError, setphoneNoError] = useState('');
+
     useEffect(() => {
-        setId(sessionStorage.getItem('Id'));
-        setImage(sessionStorage.getItem('image'));
-        setName(sessionStorage.getItem('admin_name'));
-        setPassword(sessionStorage.getItem('password'));
-        setAddress(sessionStorage.getItem('address'));
-        setEmail(sessionStorage.getItem('email'));
-        setJoinYr(sessionStorage.getItem('joiningYear'));
-        setphoneNo(sessionStorage.getItem('phoneNo'));
-    });
+        setId(sessionStorage.getItem('Id') || '');
+        setImage("http://localhost:3000/admin/getimage/" + sessionStorage.getItem('image') || '');
+        setName(sessionStorage.getItem('admin_name') || '');
+        setAddress(sessionStorage.getItem('address') || '');
+        setEmail(sessionStorage.getItem('email') || '');
+        setJoinYr(sessionStorage.getItem('joiningYear') || '');
+        setphoneNo(sessionStorage.getItem('phoneNo') || '');
+    }, []);
+
+    const validate = () => {
+        let isValid = true;
+        if (name === '') {
+            setNameError('Username is required');
+            setTimeout(() => {
+                setNameError('');
+            }, 2000);
+            isValid = false;
+        } else {
+            setNameError('');
+        }
+
+        if (email === '') {
+            setEmailError('Email is required');
+            setTimeout(() => {
+                setEmailError('');
+            }, 2000);
+            isValid = false;
+        } else {
+            setEmailError('');
+        }
+
+        if (address === '') {
+            setAddressError('Address is required');
+            setTimeout(() => {
+                setAddressError('');
+            }, 2000);
+            isValid = false;
+        } else {
+            setAddressError('');
+        }
+
+        if (joinYr === '') {
+            setJoinYrError('Joining Year is required');
+            setTimeout(() => {
+                setJoinYrError('');
+            }, 2000);
+            isValid = false;
+        } else {
+            setJoinYrError('');
+        }
+
+        if (phoneNo === '') {
+            setphoneNoError('Phone Number is required');
+            setTimeout(() => {
+                setphoneNoError('');
+            }, 2000);
+            isValid = false;
+        } else {
+            setphoneNoError('');
+        }
+
+        return isValid;
+    };
+
+    const router = useRouter();
+    const {
+        register,
+        handleSubmit,
+        reset,
+    } = useForm();
+
+    const validateFile = (value) => {
+        const file = value[0];
+        if (file) {
+            const allowedtypes = ["image/jpg", "image/png", "image/jpeg"];
+            setImageError(false);
+            setImage(file.name);
+            if (!allowedtypes.includes(file.type)) {
+                return false;
+            }
+        }
+    }
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     sessionStorage.setItem('name', name);
+    //     alert('Profile updated successfully!');
+    // };
+
+    const [success, setSuccess] = useState('')
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        if (validate()) {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('admin_name', name);
+            formData.append('email', email);
+            formData.append('phoneNo', phoneNo);
+            formData.append('address', address);
+            formData.append('joiningYear', joinYr);
+            if (!imageError)
+                formData.append('adminImage', data.image[0]);
+            try {
+                const res = await axios.patch("http://localhost:3000/admin/editprofile/", formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                });
+                console.log(res.data.image);
+
+                sessionStorage.setItem('Id', id);
+                sessionStorage.setItem('admin_name', name);
+                sessionStorage.setItem('address', address);
+                sessionStorage.setItem('email', email);
+                sessionStorage.setItem('joiningYear', joinYr);
+                sessionStorage.setItem('phoneNo', phoneNo);
+                if (!imageError)
+                    sessionStorage.setItem('image', res.data.image);
+
+                setImageError(true);
+                router.push('/admin/settings');
+
+                setSuccess("Profile Successfully Updated!");
+                setTimeout(() => {
+                    setSuccess('');
+                }, 3000);
+            }
+            catch (error) {
+                // console.log(error.response.data.message);
+
+                setSuccess('Update unsuccessfull: ' + error);
+            }
+        }
+
+    };
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
 
                     <div className="rounded-t bg-slate-700 mb-0 px-6 py-6">
@@ -90,7 +170,7 @@ export default function CardSettings() {
                                 type="submit"
                                 value={"update"}
                             >
-                                Update
+                                {success == 'Profile Successfully Updated!' ? <span>Wait...</span> : <span>Update</span>}
                             </button>
                         </div>
                     </div>
@@ -98,6 +178,10 @@ export default function CardSettings() {
                         <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                             User Information
                         </h6>
+                        {success == 'Profile Successfully Updated!' ?
+                            <div className="alert alert-success rounded p-2 m-1 text-white"><div><svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{success}</span></div></div> : success != '' ?
+                                <div className="alert alert-error rounded p-2 m-1 text-white"><div><svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span>{success}</span></div></div> :
+                                ''}
                         <div className="flex flex-wrap">
                             <div className="w-full lg:w-6/12 px-4">
                                 <div className="relative w-full mb-3">
@@ -110,11 +194,12 @@ export default function CardSettings() {
                                     <input
                                         type="text"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={name}
+                                        id="name"
                                         name="name"
-                                        {...register('name', { required: true })}
+                                        value={name}
+                                        onChange={(event) => setName(event.target.value)}
                                     />
-                                    {errors.name && <p className="text-red-500">Username is required</p>}
+                                    {nameError && <p className="text-red-500" id="nameError">{nameError}</p>}
                                 </div>
                             </div>
                             <div className="w-full lg:w-6/12 px-4">
@@ -128,10 +213,11 @@ export default function CardSettings() {
                                     <input
                                         type="email"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={email}
-                                        {...register('email', { required: true })}
+                                        name="email"
+                                        value={email}
+                                        onChange={(event) => setEmail(event.target.value)}
                                     />
-                                    {errors.email && <p className="text-red-500">Email is required</p>}
+                                    {emailError && <p className="text-red-500">{emailError}</p>}
                                 </div>
                             </div>
                             <div className="w-full lg:w-6/12 px-4">
@@ -145,10 +231,11 @@ export default function CardSettings() {
                                     <input
                                         type="text"
                                         className="cursor-no-drop border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={joinYr}
+                                        name="joiningYear"
+                                        value={joinYr}
                                         disabled
-                                        {...register('joiningYear', { required: true })}
                                     />
+                                    {joinYrError && <p className="text-red-500">{joinYrError}</p>}
                                 </div>
                             </div>
                         </div>
@@ -170,10 +257,11 @@ export default function CardSettings() {
                                     <input
                                         type="text"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={address}
-                                        {...register('address', { required: true })}
+                                        name="address"
+                                        value={address}
+                                        onChange={(event) => setAddress(event.target.value)}
                                     />
-                                    {errors.address && <p className="text-red-500">Address is required</p>}
+                                    {addressError && <p className="text-red-500">{addressError}</p>}
                                 </div>
                             </div>
                             <div className="w-full lg:w-4/12 px-4">
@@ -187,10 +275,11 @@ export default function CardSettings() {
                                     <input
                                         type="text"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={phoneNo}
-                                        {...register('phoneNo', { required: true })}
+                                        name="phoneNo"
+                                        value={phoneNo}
+                                        onChange={(event) => setphoneNo(event.target.value)}
                                     />
-                                    {errors.phoneNo && <p className="text-red-500">Phone Number is required</p>}
+                                    {phoneNoError && <p className="text-red-500">{phoneNoError}</p>}
                                 </div>
                             </div>
                             <div className="w-full lg:w-4/12 px-4">
@@ -242,46 +331,15 @@ export default function CardSettings() {
                                     </label>
                                     <input
                                         type="file"
+                                        accept="image/png,.jpg,.jpeg"
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue={image}
-                                        {...register('image', { required: true, validate: validateFile })}
+                                        {...register('image', { validate: validateFile })}
                                     />
-                                    {errors.image &&
-                                        <p>
-                                            {errors.image.type === 'required'
-                                                ?
-                                                <p id="outlined_error_help" className="text-red-500"><span className="text-red-500">Image is required</span></p>
-                                                :
-
-                                                <p id="outlined_error_help" className="text-red-500"><span className="text-red-500">Invalid file</span></p>
-                                            }
-                                        </p>}
                                 </div>
-                                <input type="number" defaultValue={id} {...register('admin_name', { required: true })} hidden />
+                                <input type="text" value={id} onChange={(event) => setId(event.target.value)} hidden />
                             </div>
                         </div>
                         <hr className="mt-6 border-b-1 border-blueGray-300" />
-                        <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                            Varification
-                        </h6>
-                        <div className="flex flex-wrap">
-                            <div className="w-full lg:w-6/12 px-4">
-                                <div className="relative w-full mb-3">
-                                    <label
-                                        className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                        htmlFor="grid-password"
-                                    >
-                                        Password ?
-                                    </label>
-                                    <input
-                                        type="password"
-                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        name="password"
-                                        {...register('password', { required: false })}
-                                    />
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div >
             </form>
