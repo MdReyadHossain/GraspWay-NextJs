@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 
 
 export default function CardSettings() {
+    let imageError = true;
+
     const [id, setId] = useState();
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
@@ -13,7 +15,6 @@ export default function CardSettings() {
     const [joinYr, setJoinYr] = useState('');
     const [phoneNo, setphoneNo] = useState('');
 
-    const [imageError, setImageError] = useState(true);
     const [nameError, setNameError] = useState('');
     const [addressError, setAddressError] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -95,12 +96,14 @@ export default function CardSettings() {
     const validateFile = (value) => {
         const file = value[0];
         if (file) {
+            console.log(file);
             const allowedtypes = ["image/jpg", "image/png", "image/jpeg"];
-            setImageError(false);
+            imageError = false;
             setImage(file.name);
             if (!allowedtypes.includes(file.type)) {
                 return false;
             }
+            console.log(`Image : ${imageError}`);
         }
     }
     // const handleSubmit = (event) => {
@@ -113,6 +116,7 @@ export default function CardSettings() {
 
     const onSubmit = async (data) => {
         console.log(data);
+        console.log(imageError);
         if (validate()) {
             const formData = new FormData();
             formData.append('id', id);
@@ -129,7 +133,7 @@ export default function CardSettings() {
                         "Content-Type": "multipart/form-data"
                     }
                 });
-                console.log(res.data.image);
+                console.log(res);
 
                 sessionStorage.setItem('Id', id);
                 sessionStorage.setItem('admin_name', name);
@@ -140,7 +144,7 @@ export default function CardSettings() {
                 if (!imageError)
                     sessionStorage.setItem('image', res.data.image);
 
-                setImageError(true);
+                imageError = true;
                 router.push('/admin/settings');
 
                 setSuccess("Profile Successfully Updated!");
@@ -154,7 +158,6 @@ export default function CardSettings() {
                 setSuccess('Update unsuccessfull: ' + error);
             }
         }
-
     };
 
     return (
