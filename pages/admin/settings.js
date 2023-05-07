@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import CardSettings from "@/components/_settingsCard";
 import CardProfile from "@/components/_profileCard";
 
-export default function Settings() {
+export default function Settings({ data }) {
     return (
         <>
             <LayoutAdmin title="Dashboard">
@@ -15,14 +15,16 @@ export default function Settings() {
                         <CardSettings />
                     </div>
                     <div className="w-full lg:w-4/12 px-4">
-                        <CardProfile />
+                        <CardProfile
+                            instructor={data.instructor}
+                            student={data.student}
+                            manager={data.manager} />
                     </div>
                 </div>
             </LayoutAdmin>
         </>
     )
 }
-
 
 export async function getServerSideProps() {
     const res = await axios.get('http://localhost:3000/admin/dashboard');

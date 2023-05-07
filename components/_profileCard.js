@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function CardProfile() {
+export default function CardProfile({ instructor, student, manager }) {
     const [id, setId] = useState();
     const [image, setImage] = useState('');
     const [name, setName] = useState('');
@@ -37,19 +37,19 @@ export default function CardProfile() {
                             <div className="flex justify-center py-4 lg:pt-4 pt-8">
                                 <div className="mr-4 p-3 text-center">
                                     <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                                        22
+                                        {instructor}
                                     </span>
                                     <span className="text-sm text-blueGray-400">Instructor</span>
                                 </div>
                                 <div className="mr-4 p-3 text-center">
                                     <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                                        10
+                                        {manager}
                                     </span>
                                     <span className="text-sm text-blueGray-400">Manager</span>
                                 </div>
                                 <div className="lg:mr-4 p-3 text-center">
                                     <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                                        89
+                                        {student}
                                     </span>
                                     <span className="text-sm text-blueGray-400">Student</span>
                                 </div>

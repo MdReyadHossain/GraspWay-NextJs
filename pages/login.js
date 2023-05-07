@@ -31,9 +31,10 @@ export default function Login() {
             });
             if (res.data.success) {
                 console.log(res.data.user);
-                console.log(res.data.session.image);
+                console.log(res.data.sessionID);
                 switch (res.data.user) {
                     case "admin":
+                        sessionStorage.setItem('sessionID', res.data.sessionID);
                         sessionStorage.setItem('Id', res.data.session.Id);
                         sessionStorage.setItem('admin_name', res.data.session.admin_name);
                         sessionStorage.setItem('password', res.data.session.password);
@@ -72,7 +73,7 @@ export default function Login() {
         <>
             <div hidden><SwitchTheme /></div>
             <Header title="Login" />
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center h-screen bg-slate-100">
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="bg-white p-8 rounded shadow-md">
                     <a href="/" class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
                         <Image src="/graspway-ico.svg" alt="graspway" width={30} height={0} />

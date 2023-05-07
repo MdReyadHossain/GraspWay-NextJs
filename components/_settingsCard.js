@@ -63,8 +63,8 @@ export default function CardSettings() {
             setAddressError('');
         }
 
-        if (joinYr === '') {
-            setJoinYrError('Joining Year is required');
+        if (joinYr !== sessionStorage.getItem('joiningYear')) {
+            setJoinYrError('Joining Year unable to edit!');
             setTimeout(() => {
                 setJoinYrError('');
             }, 2000);
@@ -312,7 +312,7 @@ export default function CardSettings() {
                                     <input
                                         type="text"
                                         className="cursor-no-drop border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                        defaultValue="1229"
+                                        value="1229"
                                         disabled
                                     />
                                 </div>

@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import SwitchTheme from "./_switchTheme";
 import { AiFillDashboard, AiOutlineUser, AiOutlineSetting } from "react-icons/ai";
 import FooterAdmin from "./_footerAdmin";
+import firebase from "firebase/compat/app"
+import "firebase/compat/database"
 
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
@@ -18,6 +20,30 @@ export default function LayoutAdmin({ children }) {
         setImage(sessionStorage.getItem('image'));
         setName(sessionStorage.getItem('admin_name'));
     });
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCFhDBY67ZzAAmlYeVW-lTac-KK7FA1zVY",
+        authDomain: "graspway-80b44.firebaseapp.com",
+        databaseURL: "https://graspway-80b44-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "graspway-80b44",
+        storageBucket: "graspway-80b44.appspot.com",
+        messagingSenderId: "832397616364",
+        appId: "1:832397616364:web:30accde802dd4f292bb1c9",
+        measurementId: "G-W6X526YXRW"
+    };
+    firebase.initializeApp(firebaseConfig);
+    useEffect(() => {
+        let views;
+        firebase.database()
+            .ref()
+            .child("page_view")
+            .on("value", (snap) => {
+                views = snap.numChildren();
+                console.log(views);
+                localStorage.setItem('user_visits', views);
+            });
+    })
+
 
     return (
         <>

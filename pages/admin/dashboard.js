@@ -5,10 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Dashboard({ data }) {
-    const [name, setName] = useState('');
-
+    const [visits, setvisit] = useState('');
     useEffect(() => {
-        setName(sessionStorage.getItem('email'));
+        setvisit(localStorage.getItem('user_visits'));
     })
     return (
         <>
@@ -20,7 +19,7 @@ export default function Dashboard({ data }) {
                             <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                                 <CardStats
                                     statSubtitle="TRAFFIC"
-                                    statTitle="350,897"
+                                    statTitle={visits}
                                     statArrow="up"
                                     statPercent="3.48"
                                     statPercentColor="text-emerald-500"
@@ -56,7 +55,7 @@ export default function Dashboard({ data }) {
                             <div className="w-full lg:w-6/12 xl:w-3/12 px-4 ">
                                 <CardStats
                                     statSubtitle="COURSES"
-                                    statTitle="49,65"
+                                    statTitle={data.course}
                                     statArrow="up"
                                     statPercent="12"
                                     statPercentColor="text-emerald-500"
