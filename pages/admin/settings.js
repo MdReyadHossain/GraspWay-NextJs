@@ -1,10 +1,10 @@
-import LayoutAdmin from "@/components/_layoutAdmin"
-import CardStats from "@/components/_statusCard";
+import LayoutAdmin from "@/components/admin/_layoutAdmin";
+import CardStats from "@/components/admin/_statusCard";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import CardSettings from "@/components/_settingsCard";
-import CardProfile from "@/components/_profileCard";
+import CardSettings from "@/components/admin/_settingsCard";
+import CardProfile from "@/components/admin/_profileCard";
 
 export default function Settings({ data }) {
     return (

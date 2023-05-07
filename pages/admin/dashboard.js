@@ -1,18 +1,20 @@
-import LayoutAdmin from "@/components/_layoutAdmin"
-import CardStats from "@/components/_statusCard";
+import InstructorChart from "@/components/admin/_instructorChartCard";
+import LayoutAdmin from "@/components/admin/_layoutAdmin";
+import CardStats from "@/components/admin/_statusCard";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Dashboard({ data }) {
-    const [visits, setvisit] = useState('');
+    const [visits, setVisit] = useState('');
     useEffect(() => {
-        setvisit(localStorage.getItem('user_visits'));
+        setVisit(localStorage.getItem('user_visits'));
     })
+    console.log(data);
     return (
         <>
             <LayoutAdmin title="Dashboard">
-                <div className="px-4 md:px-10 mx-auto w-full">
+                <div className="px-4 mx-auto w-full">
                     <div>
                         {/* Card stats */}
                         <div className="flex flex-wrap">
@@ -66,6 +68,14 @@ export default function Dashboard({ data }) {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="p-4 flex flex-wrap">
+                    <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+                        <InstructorChart />
+                    </div>
+                    {/* <div className="w-full xl:w-4/12 px-4">
+                        <CardBarChart />
+                    </div> */}
                 </div>
             </LayoutAdmin>
         </>

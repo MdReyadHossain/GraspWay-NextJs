@@ -1,15 +1,15 @@
-import Header from "./_header";
+import Header from "../_header";
 import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import { Children, useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from 'react';
-import SwitchTheme from "./_switchTheme";
+import SwitchTheme from "../_switchTheme";
 import { AiFillDashboard, AiOutlineUser, AiOutlineSetting } from "react-icons/ai";
 import FooterAdmin from "./_footerAdmin";
-import firebase from "firebase/compat/app"
-import "firebase/compat/database"
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
 
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
