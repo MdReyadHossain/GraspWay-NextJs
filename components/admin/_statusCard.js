@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { MdTraffic } from "react-icons/md";
 import { FaUserTie, FaUserGraduate, FaBook } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { RxLinkNone2 } from "react-icons/rx";
 import { BiUpArrowAlt, BiDownArrowAlt } from "react-icons/bi";
 
 export default function CardStats({
+    statDate,
     statSubtitle,
     statTitle,
     statArrow,
@@ -15,6 +16,49 @@ export default function CardStats({
     statIconName,
     statIconColor,
 }) {
+    if (statDate) {
+        console.log(statDate.length);
+        let currYear = 0;
+        let lastYear = 0;
+        const today = new Date();
+        for (let i = 0; i < statDate.length; i++) {
+            today.getMonth() == statDate[i].month ?
+                today.getFullYear() == statDate[i].year ?
+                    currYear++ : '' : ''
+            today.getMonth() == statDate[i].month ?
+                today.getFullYear() - 1 == statDate[i].year ?
+                    lastYear++ : '' : ''
+        }
+        if (currYear >= lastYear) {
+            statArrow = "up";
+            statPercentColor = "text-emerald-500"
+        } else {
+            statArrow = "down";
+            statPercentColor = "text-red-500";
+        }
+
+    }
+
+    // useEffect(() => {
+    //     if (effectRan.current === false) {
+    //         if (element) {
+    //             console.log(element.length);
+    //             let currYear = 0;
+    //             let lastYear = 0;
+    //             const today = new Date();
+    //             for (let i = 0; i < element.length; i++) {
+    //                 today.getMonth() == element[i].month ?
+    //                     today.getFullYear() == element[i].year ?
+    //                         currYear++ : '' :
+    //                     today.getMonth() == element[i].month ?
+    //                         today.getFullYear() - 1 == element[i].year ?
+    //                             lastYear++ : '' : ''
+    //             }
+    //             statArrow = "up"
+    //         }
+    //     }
+    //     return () => effectRan.current = true;
+    // }, []);
     return (
         <>
             <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -50,12 +94,12 @@ export default function CardStats({
                         <span className={statPercentColor + " mr-2"}>
                             {
                                 statArrow === "up"
-                                    ? <BiUpArrowAlt />
+                                    ? <BiUpArrowAlt /> 
                                     : statArrow === "down"
                                         ? <BiDownArrowAlt />
                                         : ""
                             }
-                            {statPercent}%
+                            {statPercent}
                         </span>
                         <span className="whitespace-nowrap">{statDescripiron}</span>
                     </p>
