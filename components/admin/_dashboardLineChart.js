@@ -7,6 +7,7 @@ export default function StudentChart({ student }) {
         if (effectRan.current === false) {
             const currYear = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             const lastYear = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            console.log(student);
             const today = new Date();
             for (let i = 0; i < student.length; i++) {
                 today.getFullYear() == student[i].year ?

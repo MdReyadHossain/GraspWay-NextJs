@@ -7,6 +7,9 @@ import { useRouter } from "next/router";
 import { useEffect } from 'react';
 import SwitchTheme from "../_switchTheme";
 import { AiFillDashboard, AiOutlineUser, AiOutlineSetting } from "react-icons/ai";
+import { BiCategory, BiBook } from "react-icons/bi";
+import { BsGraphUpArrow, BsFillClipboardCheckFill } from "react-icons/bs";
+import { FaUserPlus } from "react-icons/fa";
 import FooterAdmin from "./_footerAdmin";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
@@ -52,7 +55,7 @@ export default function LayoutAdmin({ children }) {
             <div className="drawer drawer-mobile bg-slate-100">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle " />
                 <div className="drawer-content min-h-screen">
-                    <div className="lg:sticky lg:top-0 navbar z-10 backdrop-blur-sm">
+                    <div className="z-10 lg:sticky lg:top-0 navbar backdrop-blur-sm">
                         <div className="flex-1">
                             <label htmlFor="my-drawer-2" className="btn btn-circle swap swap-rotate drawer-button lg:hidden bg-white border-none">
                                 <input type="checkbox" />
@@ -76,7 +79,7 @@ export default function LayoutAdmin({ children }) {
                                             Settings
                                         </Link>
                                     </li>
-                                    <li><a href="/logout">Logout</a></li>
+                                    <li><a href="/admin/logout">Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -91,29 +94,48 @@ export default function LayoutAdmin({ children }) {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 {/* {Admin Sidebar} */}
                 <div className="drawer-side">
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                     <ul className="menu w-60 bg-slate-700 text-slate-200">
-                        <li className="text-2xl text-white font-bold m-2">Admin Panal</li>
+                        <li className="text-2xl text-white m-2">Admin Panal</li>
                         <br />
                         {/* <!-- Sidebar content here --> */}
                         <li className={router.pathname.indexOf("/admin/dashboard") !== -1
                             ? "bg-indigo-700 hover:bg-slate-800"
-                            : "hover:bg-slate-800"}>
+                            : "hover:bg-slate-800 p-3"}>
                             <Link href={"/admin/dashboard"}><AiFillDashboard className="" />Dashboard</Link>
                         </li>
-                        <li className={router.pathname.indexOf("/admin/user") !== -1
+                        <li className={router.pathname.indexOf("/admin/category") !== -1
                             ? "bg-indigo-700 hover:bg-slate-800"
-                            : "hover:bg-slate-800"}>
-                            <Link href={"/admin/user"}><AiOutlineUser className="" />Users</Link>
+                            : "hover:bg-slate-800 p-3"}>
+                            <Link href={"/admin/category"}><BiCategory className="" />Category</Link>
+                        </li>
+                        <li className={router.pathname.indexOf("/admin/course") !== -1
+                            ? "bg-indigo-700 hover:bg-slate-800"
+                            : "hover:bg-slate-800 p-3"}>
+                            <Link href={"/admin/category"}><BiBook className="" />Course</Link>
+                        </li>
+                        <li className={router.pathname.indexOf("/admin/revenue") !== -1
+                            ? "bg-indigo-700 hover:bg-slate-800"
+                            : "hover:bg-slate-800 p-3"}>
+                            <Link href={"/admin/category"}><BsGraphUpArrow className="" />Revenue</Link>
+                        </li>
+                        <li className={router.pathname.indexOf("/admin/request") !== -1
+                            ? "bg-indigo-700 hover:bg-slate-800"
+                            : "hover:bg-slate-800 p-3"}>
+                            <Link href={"/admin/category"}><FaUserPlus className="" />Request</Link>
+                        </li>
+                        <li className={router.pathname.indexOf("/admin/notice") !== -1
+                            ? "bg-indigo-700 hover:bg-slate-800"
+                            : "hover:bg-slate-800 p-3"}>
+                            <Link href={"/admin/category"}><BsFillClipboardCheckFill className="" />Notice Board</Link>
                         </li>
                         <li className={router.pathname.indexOf("/admin/settings") !== -1
                             ? "bg-indigo-700 hover:bg-slate-800"
-                            : "hover:bg-slate-800"}>
+                            : "hover:bg-slate-800 p-3"}>
                             <Link href={"/admin/settings"}><AiOutlineSetting className="" />Settings</Link>
                         </li>
                     </ul>

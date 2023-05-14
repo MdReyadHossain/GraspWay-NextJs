@@ -25,7 +25,7 @@
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.43.9",
         "react-icons": "^4.8.0",
-        "react-router-dom": "^6.10.0",
+        "react-router-dom": "^6.11.1",
         "redux": "^4.2.1",
         "use-hooks": "^2.0.0-rc.5",
         "video-react": "^0.16.0"

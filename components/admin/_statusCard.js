@@ -17,7 +17,7 @@ export default function CardStats({
     statIconColor,
 }) {
     if (statDate) {
-        console.log(statDate.length);
+        // console.log(statDate.length);
         let currYear = 0;
         let lastYear = 0;
         const today = new Date();
@@ -36,29 +36,7 @@ export default function CardStats({
             statArrow = "down";
             statPercentColor = "text-red-500";
         }
-
     }
-
-    // useEffect(() => {
-    //     if (effectRan.current === false) {
-    //         if (element) {
-    //             console.log(element.length);
-    //             let currYear = 0;
-    //             let lastYear = 0;
-    //             const today = new Date();
-    //             for (let i = 0; i < element.length; i++) {
-    //                 today.getMonth() == element[i].month ?
-    //                     today.getFullYear() == element[i].year ?
-    //                         currYear++ : '' :
-    //                     today.getMonth() == element[i].month ?
-    //                         today.getFullYear() - 1 == element[i].year ?
-    //                             lastYear++ : '' : ''
-    //             }
-    //             statArrow = "up"
-    //         }
-    //     }
-    //     return () => effectRan.current = true;
-    // }, []);
     return (
         <>
             <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -94,7 +72,7 @@ export default function CardStats({
                         <span className={statPercentColor + " mr-2"}>
                             {
                                 statArrow === "up"
-                                    ? <BiUpArrowAlt /> 
+                                    ? <BiUpArrowAlt />
                                     : statArrow === "down"
                                         ? <BiDownArrowAlt />
                                         : ""

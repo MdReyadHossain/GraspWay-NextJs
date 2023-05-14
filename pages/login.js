@@ -58,7 +58,6 @@ export default function Login() {
                         setSuccess(res.data.message);
                 }
             }
-
             setSuccess(res.data.message);
         }
         catch (error) {
