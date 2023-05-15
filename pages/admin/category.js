@@ -133,7 +133,6 @@ export default function Dashboard({ data }) {
     }
     return (
         <>
-            <Session />
             <LayoutAdmin title="Dashboard">
                 <div className="px-10 mx-auto w-full">
                     <div

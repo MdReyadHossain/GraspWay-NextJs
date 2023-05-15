@@ -5,12 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import CardSettings from "@/components/admin/_settingsCard";
 import CardProfile from "@/components/admin/_profileCard";
-import Session from "@/components/session";
 
 export default function Settings({ data }) {
     return (
         <>
-            <Session />
             <LayoutAdmin title="Dashboard">
                 <div className="flex flex-wrap">
                     <div className="w-full lg:w-8/12 px-4">

@@ -37,7 +37,6 @@ export default function Login() {
                         sessionStorage.setItem('sessionID', res.data.sessionID);
                         sessionStorage.setItem('Id', res.data.session.Id);
                         sessionStorage.setItem('admin_name', res.data.session.admin_name);
-                        sessionStorage.setItem('password', res.data.session.password);
                         sessionStorage.setItem('address', res.data.session.address);
                         sessionStorage.setItem('email', res.data.session.email);
                         sessionStorage.setItem('joiningYear', res.data.session.joiningYear);
@@ -52,7 +51,13 @@ export default function Login() {
                         router.push("/instructor/dashboard");
                         break;
                     case "student":
-                        router.push("/student/dashboard");
+                        sessionStorage.setItem('sessionID', res.data.sessionID);
+                        sessionStorage.setItem('Id', res.data.session.Id);
+                        sessionStorage.setItem('student_name', res.data.session.student_name);
+                        sessionStorage.setItem('dob', res.data.session.dob);
+                        sessionStorage.setItem('email', res.data.session.email);
+                        sessionStorage.setItem('phoneNo', res.data.session.phoneNo);
+                        router.push("/");
                         break;
                     default:
                         setSuccess(res.data.message);

@@ -2,7 +2,6 @@ import CourseChart from "@/components/admin/_dashboardBarChart";
 import StudentChart from "@/components/admin/_dashboardLineChart";
 import LayoutAdmin from "@/components/admin/_layoutAdmin";
 import CardStats from "@/components/admin/_statusCard";
-import Session from "@/components/session";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,7 +14,6 @@ export default function Dashboard({ data }) {
     // console.log(data);
     return (
         <>
-            <Session />
             <LayoutAdmin title="Dashboard">
                 <div className="px-4 mx-auto w-full">
                     <div>

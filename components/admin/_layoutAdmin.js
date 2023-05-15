@@ -13,6 +13,7 @@ import { FaUserPlus } from "react-icons/fa";
 import FooterAdmin from "./_footerAdmin";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
+import Session from "../session";
 
 export default function LayoutAdmin({ children }) {
     const router = useRouter();
@@ -51,7 +52,7 @@ export default function LayoutAdmin({ children }) {
     return (
         <>
             <Header title="Admin Panel" />
-
+            <Session />
             <div className="drawer drawer-mobile bg-slate-100">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle " />
                 <div className="drawer-content min-h-screen">
